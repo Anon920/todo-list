@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}
-	Todo list
+  Todo list
 {% endblock %}
 
 {% block content %}
-	
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">TODO List</h1>
+    <a href="{% url 'todo:tag_add' %}" class="btn btn-primary">Add task</a>
+  </div>
+
+ 
 {% endblock %}
