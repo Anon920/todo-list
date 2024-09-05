@@ -1,7 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 
 from todo.forms import TaskForm, TagForm
 from todo.models import Task, Tag
@@ -17,20 +16,20 @@ class TaskListView(ListView):
 class TaskCreateView(CreateView):
     model = Task
     form_class = TaskForm
-    template_name = ""
+    template_name = "task_form.html"
     success_url = reverse_lazy("todo:home")
 
 
 class TaskUpdateView(UpdateView):
     model = Task
     form_class = TaskForm
-    template_name = ""
+    template_name = "task_form.html"
     success_url = reverse_lazy("todo:home")
 
 
 class TaskDeleteView(DeleteView):
     model = Task
-    template_name = ""
+    template_name = "task_confirm_form.html"
     success_url = reverse_lazy("todo:home")
 
 
@@ -61,7 +60,7 @@ class TagDeleteView(DeleteView):
 
 
 class CompleteTaskView(View):
-    def post(self, pk, request):
+    def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.done = True
         task.save()
@@ -69,7 +68,7 @@ class CompleteTaskView(View):
 
 
 class UndoTaskView(View):
-    def post(self, pk, request):
+    def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.done = False
         task.save()
